@@ -1,0 +1,296 @@
+<div class="form-page">
+  <div class="page-header">
+    <div>
+      <h1>{{ modoEdicion ? 'Editar Funcionario' : 'Nuevo Funcionario' }}</h1>
+      <p>Registro completo de datos personales y laborales</p>
+    </div>
+  </div>
+
+  @if (mensajeExito) {
+  <div class="toast" [ngClass]="'toast-' + tipoToast">
+    <span>✅</span>
+
+    <div>
+      <strong>{{ tituloToast }}</strong>
+      <p>{{ mensajeExito }}</p>
+    </div>
+  </div>
+  }
+
+  @if (mensajeError) {
+  <div class="toast toast-error">
+    <span>❌</span>
+
+    <div>
+      <strong>Error</strong>
+      <p>{{ mensajeError }}</p>
+    </div>
+  </div>
+  }
+
+  <form class="form-card">
+    <h2>Datos personales</h2>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Identificación</label>
+        <input type="text" [(ngModel)]="funcionario.numeroDocumento" name="numeroDocumento">
+      </div>
+
+      <div class="form-group">
+        <label>Tipo Documento</label>
+        <select [(ngModel)]="funcionario.tipoDocumento" name="tipoDocumento">
+          <option value="C.C">C.C</option>
+          <option value="C.E">C.E</option>
+          <option value="PAS">PAS</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Sexo</label>
+        <select [(ngModel)]="funcionario.sexo" name="sexo">
+          <option value="M">Masculino</option>
+          <option value="F">Femenino</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Nacionalidad</label>
+        <select [(ngModel)]="funcionario.nacionalidad" name="nacionalidad">
+          <option value="Colombiano">Colombiano</option>
+          <option value="Extranjero">Extranjero</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>País</label>
+        <input type="text" [(ngModel)]="funcionario.pais" name="pais">
+      </div>
+
+      <div class="form-group">
+        <label>Lugar Expedición</label>
+        <input type="text" [(ngModel)]="funcionario.lugarExpedicion" name="lugarExpedicion">
+      </div>
+
+      <div class="form-group">
+        <label>Fecha Expedición</label>
+        <input type="date" [(ngModel)]="funcionario.fechaExpedicion" name="fechaExpedicion">
+      </div>
+
+      <div class="form-group">
+        <label>Estado Civil</label>
+        <select [(ngModel)]="funcionario.estadoCivil" name="estadoCivil">
+          <option value="Soltero(a)">Soltero(a)</option>
+          <option value="Casado(a)">Casado(a)</option>
+          <option value="Unión Libre">Unión Libre</option>
+          <option value="Divorciado(a)">Divorciado(a)</option>
+          <option value="Viudo(a)">Viudo(a)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>N° Hijos</label>
+        <input type="number" min="0" [(ngModel)]="funcionario.numeroHijos" name="numeroHijos">
+      </div>
+
+      <div class="form-group">
+        <label>Primer Nombre</label>
+        <input type="text" [(ngModel)]="funcionario.primerNombre" name="primerNombre">
+      </div>
+
+      <div class="form-group">
+        <label>Segundo Nombre</label>
+        <input type="text" [(ngModel)]="funcionario.segundoNombre" name="segundoNombre">
+      </div>
+
+      <div class="form-group">
+        <label>Primer Apellido</label>
+        <input type="text" [(ngModel)]="funcionario.primerApellido" name="primerApellido">
+      </div>
+
+      <div class="form-group">
+        <label>Segundo Apellido</label>
+        <input type="text" [(ngModel)]="funcionario.segundoApellido" name="segundoApellido">
+      </div>
+
+      <div class="form-group">
+        <label>Fecha Nacimiento</label>
+        <input type="date" [(ngModel)]="funcionario.fechaNacimiento" name="fechaNacimiento">
+      </div>
+
+      <div class="form-group">
+        <label>País Nacimiento</label>
+        <input type="text" [(ngModel)]="funcionario.paisNacimiento" name="paisNacimiento">
+      </div>
+
+      <div class="form-group">
+        <label>Dpto Nacimiento</label>
+        <input type="text" [(ngModel)]="funcionario.departamentoNacimiento" name="departamentoNacimiento">
+      </div>
+
+      <div class="form-group">
+        <label>Ciudad Nacimiento</label>
+        <input type="text" [(ngModel)]="funcionario.ciudadNacimiento" name="ciudadNacimiento">
+      </div>
+
+      <div class="form-group">
+        <label>Dirección</label>
+        <input type="text" [(ngModel)]="funcionario.direccion" name="direccion">
+      </div>
+
+      <div class="form-group">
+        <label>País Dirección</label>
+        <input type="text" [(ngModel)]="funcionario.paisDireccion" name="paisDireccion">
+      </div>
+
+      <div class="form-group">
+        <label>Dpto Dirección</label>
+        <input type="text" [(ngModel)]="funcionario.departamentoDireccion" name="departamentoDireccion">
+      </div>
+
+      <div class="form-group">
+        <label>Ciudad Dirección</label>
+        <input type="text" [(ngModel)]="funcionario.ciudadDireccion" name="ciudadDireccion">
+      </div>
+
+      <div class="form-group">
+        <label>Teléfono</label>
+        <input type="text" [(ngModel)]="funcionario.telefono" name="telefono">
+      </div>
+
+      <div class="form-group">
+        <label>Correo Electrónico</label>
+        <input type="email" [(ngModel)]="funcionario.correo" name="correo">
+      </div>
+
+      <div class="form-group">
+        <label>Grupo Sanguíneo</label>
+        <select [(ngModel)]="funcionario.grupoSanguineo" name="grupoSanguineo">
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Grupo Étnico</label>
+        <select [(ngModel)]="funcionario.grupoEtnico" name="grupoEtnico">
+          <option value="Ninguno">Ninguno</option>
+          <option value="Indígena">Indígena</option>
+          <option value="Afrocolombiano">Afrocolombiano</option>
+          <option value="Raizal">Raizal</option>
+          <option value="Palenquero">Palenquero</option>
+          <option value="ROM">ROM</option>
+        </select>
+      </div>
+    </div>
+
+    @if (funcionario.sexo === 'M') {
+    <h2>Libreta militar</h2>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Clase Libreta</label>
+        <select [(ngModel)]="funcionario.claseLibretaMilitar" name="claseLibretaMilitar">
+          <option value="Ninguna">Ninguna</option>
+          <option value="1ra">1ra</option>
+          <option value="2da">2da</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>N° Libreta Militar</label>
+        <input type="text" [(ngModel)]="funcionario.numeroLibretaMilitar" name="numeroLibretaMilitar">
+      </div>
+
+      <div class="form-group">
+        <label>N° Distrito Militar</label>
+        <input type="text" [(ngModel)]="funcionario.distritoMilitar" name="distritoMilitar">
+      </div>
+    </div>
+    }
+
+    <h2>Información laboral y seguridad social</h2>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Profesión</label>
+        <input type="text" [(ngModel)]="funcionario.profesion" name="profesion">
+      </div>
+
+      <div class="form-group">
+        <label>EPS</label>
+        <input type="text" [(ngModel)]="funcionario.eps" name="eps">
+      </div>
+
+      <div class="form-group">
+        <label>Fondo Pensiones</label>
+        <input type="text" [(ngModel)]="funcionario.fondoPensiones" name="fondoPensiones">
+      </div>
+
+      <div class="form-group">
+        <label>ARL</label>
+        <input type="text" [(ngModel)]="funcionario.arl" name="arl">
+      </div>
+
+      <div class="form-group">
+        <label>Fecha Ingreso</label>
+        <input type="date" [(ngModel)]="funcionario.fechaIngreso" name="fechaIngreso">
+      </div>
+
+      <div class="form-group">
+        <label>Cargo</label>
+        <select [(ngModel)]="funcionario.cargo" name="cargo">
+          <option [ngValue]="null">Seleccione...</option>
+          <option *ngFor="let cargo of cargos" [ngValue]="cargo">
+            {{ cargo.nombre }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Dependencia</label>
+        <select [(ngModel)]="funcionario.dependencia" name="dependencia">
+          <option [ngValue]="null">Seleccione...</option>
+          <option *ngFor="let dependencia of dependencias" [ngValue]="dependencia">
+            {{ dependencia.nombre }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Tipo Contrato</label>
+        <select [(ngModel)]="funcionario.tipoContrato" name="tipoContrato">
+          <option [ngValue]="null">Seleccione...</option>
+          <option *ngFor="let tipo of tiposContrato" [ngValue]="tipo">
+            {{ tipo.nombre }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Estado Funcionario</label>
+        <select [(ngModel)]="funcionario.estadoFuncionario" name="estadoFuncionario">
+          <option [ngValue]="null">Seleccione...</option>
+          <option *ngFor="let estado of estadosFuncionario" [ngValue]="estado">
+            {{ estado.nombre }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn-cancel" (click)="cancelar()">Cancelar</button>
+
+      <button type="button" class="btn-save" (click)="guardar()">
+        {{ modoEdicion ? 'Actualizar Funcionario' : 'Guardar Funcionario' }}
+      </button>
+    </div>
+
+  </form>
+</div>

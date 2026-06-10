@@ -1,0 +1,27 @@
+<div class="container">
+  <h1>Documentos</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Archivo</th>
+        <th>Tipo Documento</th>
+        <th>Fecha Vencimiento</th>
+        <th>Estado</th>
+        <th>Funcionario</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let documento of documentos">
+        <td>{{ documento.id }}</td>
+        <td>{{ documento.nombreArchivo }}</td>
+        <td>{{ documento.tipoDocumento }}</td>
+        <td>{{ documento.fechaVencimiento }}</td>
+        <td>{{ documento.estado }}</td>
+        <td>{{ documento.nombreFuncionario }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

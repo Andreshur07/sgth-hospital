@@ -1,0 +1,25 @@
+<div class="container">
+  <h1>Alertas</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Funcionario</th>
+        <th>Tipo</th>
+        <th>Fecha Alerta</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let alerta of alertas">
+        <td>{{ alerta.id }}</td>
+        <td>{{ alerta.funcionario }}</td>
+        <td>{{ alerta.tipo }}</td>
+        <td>{{ alerta.fechaAlerta }}</td>
+        <td>{{ alerta.estado }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

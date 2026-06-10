@@ -1,0 +1,19 @@
+.navbar {
+  height: 70px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+
+  h3 {
+    margin: 0;
+    color: #102a43;
+  }
+
+  span {
+    color: #52606d;
+    font-weight: 500;
+  }
+}

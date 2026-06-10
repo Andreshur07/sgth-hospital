@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f4f6f9;
+  font-family: Arial, sans-serif;
+}
+
+.main-content {
+  margin-left: 220px;
+  min-height: 100vh;
+  width: calc(100% - 220px);
+  background: #f4f6f9;
+}
