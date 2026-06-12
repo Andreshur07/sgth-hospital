@@ -10,6 +10,26 @@ export class DocumentoService {
   private apiUrl = 'http://localhost:8080/api/documentos';
 
   listarResumen() {
-    return this.http.get(`${this.apiUrl}/resumen`);
+    return this.http.get<any[]>(`${this.apiUrl}/resumen`);
+  }
+
+  listarTodos() {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+
+  buscarPorId(id: number) {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
+
+  guardar(documento: any) {
+    return this.http.post<any>(this.apiUrl, documento);
+  }
+
+  actualizar(id: number, documento: any) {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, documento);
+  }
+
+  eliminar(id: number) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

@@ -4,15 +4,35 @@
   box-sizing: border-box;
 }
 
+.search-box {
+  margin-bottom: 20px;
+}
+
+.search-box input {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.search-box input:focus {
+  border-color: #2563eb;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
   background: white;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 th,
 td {
-  border: 1px solid #ddd;
+  border: 1px solid #e5e7eb;
   padding: 14px 12px;
   text-align: left;
   color: #111827;
@@ -24,49 +44,68 @@ th {
   font-weight: 600;
 }
 
-tbody tr {
-  background: white;
-}
-
 tbody tr:hover {
   background: #f8fafc;
 }
 
-.toolbar {
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: flex-end;
+.estado-badge {
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-block;
 }
 
-.btn-new {
-  background: #16a34a;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
+.pendiente {
+  background: #fef3c7;
+  color: #92400e;
 }
 
-.btn-new:hover {
-  background: #15803d;
+.atendida {
+  background: #dcfce7;
+  color: #166534;
 }
 
-.btn-edit {
+.inactiva {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.btn-attend {
   background: #2563eb;
   color: white;
   border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
+  padding: 8px 14px;
+  border-radius: 6px;
   cursor: pointer;
-  margin-right: 5px;
+  font-weight: 600;
 }
 
-.btn-delete {
-  background: #dc2626;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
+.btn-attend:hover {
+  background: #1d4ed8;
+}
+
+.btn-attend:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.alert-success {
+  background: #ecfdf5;
+  color: #166534;
+  border-left: 5px solid #22c55e;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.alert-error {
+  background: #fef2f2;
+  color: #991b1b;
+  border-left: 5px solid #ef4444;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-weight: 600;
 }

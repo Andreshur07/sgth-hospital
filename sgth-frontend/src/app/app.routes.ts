@@ -7,6 +7,8 @@ import { Documentos } from './pages/documentos/documentos';
 import { Alertas } from './pages/alertas/alertas';
 import { Usuarios } from './pages/usuarios/usuarios';
 import { HistorialEstados } from './pages/historial-estados/historial-estados';
+import { DocumentoForm } from './pages/documento-form/documento-form';
+import { UsuarioForm } from './pages/usuario-form/usuario-form';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -17,10 +19,15 @@ export const routes: Routes = [
   { path: 'funcionarios/nuevo', component: FuncionarioForm },
   { path: 'funcionarios/editar/:id', component: FuncionarioForm },
 
+
+  { path: 'documentos/nuevo', component: DocumentoForm },
   { path: 'documentos', component: Documentos },
+  { path: 'documentos/editar/:id', component: DocumentoForm },
   { path: 'alertas', component: Alertas },
   { path: 'usuarios', component: Usuarios },
   { path: 'historial-estados', component: HistorialEstados },
+  { path: 'usuarios/nuevo', component: UsuarioForm },
+  { path: 'usuarios/editar/:id', component: UsuarioForm },
 
   { path: '**', redirectTo: 'dashboard' }
 ];
