@@ -1,0 +1,306 @@
+<div class="perfil-page" *ngIf="funcionario">
+
+    <div class="perfil-header">
+        <div>
+            <h1>
+                {{ funcionario.primerNombre }}
+                {{ funcionario.segundoNombre }}
+                {{ funcionario.primerApellido }}
+                {{ funcionario.segundoApellido }}
+            </h1>
+
+            <p>
+                {{ funcionario.cargo?.nombre || 'Sin cargo asignado' }} —
+                {{ funcionario.dependencia?.nombre || 'Sin dependencia' }}
+            </p>
+
+            <span class="estado" [class.activo]="funcionario.estado === 'ACTIVO'"
+                [class.inactivo]="funcionario.estado !== 'ACTIVO'">
+                {{ funcionario.estado }}
+            </span>
+        </div>
+
+        <button class="btn-back" (click)="volver()">
+            Volver
+        </button>
+    </div>
+
+    <div class="tabs">
+        <button [class.active]="pestanaActiva === 'datos'" (click)="cambiarPestana('datos')">
+            Datos Personales
+        </button>
+
+        <button [class.active]="pestanaActiva === 'documentos'" (click)="cambiarPestana('documentos')">
+            Documentos
+        </button>
+
+        <button [class.active]="pestanaActiva === 'capacitaciones'" (click)="cambiarPestana('capacitaciones')">
+            Capacitaciones
+        </button>
+
+        <button [class.active]="pestanaActiva === 'experiencia'" (click)="cambiarPestana('experiencia')">
+            Experiencia Laboral
+        </button>
+
+        <button [class.active]="pestanaActiva === 'requisitos'" (click)="cambiarPestana('requisitos')">
+            Requisitos Legales
+        </button>
+
+        <button [class.active]="pestanaActiva === 'reporte'" (click)="cambiarPestana('reporte')">
+            Reporte
+        </button>
+    </div>
+
+    <div class="tab-content">
+
+        @if (pestanaActiva === 'datos') {
+        <div class="section-card">
+            <h2>Datos personales</h2>
+
+            <div class="info-grid">
+                <div><strong>Documento:</strong> {{ funcionario.numeroDocumento }}</div>
+                <div><strong>Tipo documento:</strong> {{ funcionario.tipoDocumento }}</div>
+                <div><strong>Correo:</strong> {{ funcionario.correo }}</div>
+                <div><strong>Teléfono:</strong> {{ funcionario.telefono }}</div>
+                <div><strong>Dirección:</strong> {{ funcionario.direccion }}</div>
+                <div><strong>Fecha nacimiento:</strong> {{ funcionario.fechaNacimiento }}</div>
+                <div><strong>Grupo sanguíneo:</strong> {{ funcionario.grupoSanguineo }}</div>
+                <div><strong>Estado civil:</strong> {{ funcionario.estadoCivil }}</div>
+            </div>
+        </div>
+        }
+
+        @if (pestanaActiva === 'documentos') {
+        <div class="section-card">
+            <h2>Documentos del funcionario</h2>
+
+            @if (mensajeDocumentoExito) {
+            <div class="alert-success">
+                ✅ {{ mensajeDocumentoExito }}
+            </div>
+            }
+
+            @if (mensajeDocumentoError) {
+            <div class="alert-error">
+                ❌ {{ mensajeDocumentoError }}
+            </div>
+            }
+
+            <div class="document-form">
+
+                <div class="form-group">
+                    <label>Tipo Documento</label>
+                    <select [(ngModel)]="documentoForm.tipoDocumentoId" name="tipoDocumentoId">
+                        <option [ngValue]="null">Seleccione...</option>
+                        <option *ngFor="let tipo of tiposDocumento" [ngValue]="tipo.id">
+                            {{ tipo.nombre }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Fecha Expedición</label>
+                    <input type="date" [(ngModel)]="documentoForm.fechaExpedicion" name="fechaExpedicion">
+                </div>
+
+                <div class="form-group">
+                    <label>Fecha Vencimiento</label>
+                    <input type="date" [(ngModel)]="documentoForm.fechaVencimiento" name="fechaVencimiento">
+                </div>
+
+                <div class="form-group">
+                    <label>Archivo PDF</label>
+                    <input type="file" accept="application/pdf" (change)="seleccionarArchivo($event)">
+                </div>
+
+                <div class="form-group full-row">
+                    <label>Observación</label>
+                    <textarea [(ngModel)]="documentoForm.observacion" name="observacion"
+                        placeholder="Observaciones del documento"></textarea>
+                </div>
+
+                <div class="form-actions full-row">
+                    <button type="button" class="btn-save" (click)="guardarDocumentoPerfil()">
+                        Agregar Documento
+                    </button>
+                </div>
+
+            </div>
+
+            <table class="documents-table">
+                <thead>
+                    <tr>
+                        <th>Tipo Documento</th>
+                        <th>Archivo</th>
+                        <th>Fecha Expedición</th>
+                        <th>Fecha Vencimiento</th>
+                        <th>Estado</th>
+                        <th>Adjunto</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let documento of documentosFuncionario">
+                        <td>{{ documento.tipoDocumento?.nombre }}</td>
+                        <td>{{ documento.nombreArchivo }}</td>
+                        <td>{{ documento.fechaExpedicion }}</td>
+                        <td>{{ documento.fechaVencimiento }}</td>
+
+                        <td>
+                            <span class="estado" [class.activo]="documento.estado === 'VIGENTE'"
+                                [class.inactivo]="documento.estado !== 'VIGENTE'">
+                                {{ documento.estado }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <a class="btn-view-file" [href]="documentoService.verDocumento(documento.id)"
+                                target="_blank">
+                                Ver PDF
+                            </a>
+                        </td>
+
+                        <td>
+                            <button type="button" class="btn-delete" (click)="eliminarDocumentoPerfil(documento.id)">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        }
+
+        @if (pestanaActiva === 'capacitaciones') {
+        <div class="section-card">
+            <h2>Capacitaciones y cursos</h2>
+            <p>Aquí se registrarán cursos, certificaciones y capacitaciones.</p>
+        </div>
+        }
+
+        @if (pestanaActiva === 'experiencia') {
+        <div class="section-card">
+            <h2>Experiencia laboral</h2>
+            <p>Aquí se mostrará la experiencia laboral del funcionario.</p>
+        </div>
+        }
+
+        @if (pestanaActiva === 'requisitos') {
+        <div class="section-card">
+
+            <h2>Requisitos Legales</h2>
+
+            <div class="compliance-card">
+
+                <div class="compliance-header">
+                    <h3>Cumplimiento Legal</h3>
+
+                    <span class="compliance-value">
+                        {{ porcentajeCumplimiento }}%
+                    </span>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" [style.width.%]="porcentajeCumplimiento">
+                    </div>
+                </div>
+
+                <p>
+                    {{ requisitosCumplidos }}
+                    de
+                    {{ totalRequisitos }}
+                    requisitos obligatorios cumplidos
+                </p>
+
+            </div>
+
+            <table class="documents-table">
+
+                <thead>
+                    <tr>
+                        <th>Documento</th>
+                        <th>Obligatorio</th>
+                        <th>Estado</th>
+                        <th>Vencimiento</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let requisito of requisitosLegales">
+
+                        <td>
+                            {{ requisito.tipoDocumento.nombre }}
+                        </td>
+
+                        <td>
+                            Sí
+                        </td>
+
+                        <td>
+
+                            <span class="estado" [class.activo]="requisito.cumple" [class.inactivo]="!requisito.cumple">
+
+                                {{ requisito.cumple ? 'CUMPLE' : 'FALTA' }}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            @if (requisito.documento) {
+                            {{ requisito.documento.fechaVencimiento || 'N/A' }}
+                            }
+
+                            @if (!requisito.documento) {
+                            -
+                            }
+
+                        </td>
+
+                        <td>
+
+                            @if (requisito.documento) {
+
+                            <a class="btn-view-file" [href]="documentoService.verDocumento(requisito.documento.id)"
+                                target="_blank">
+
+                                Ver PDF
+
+                            </a>
+
+                            }
+
+                            @if (!requisito.documento) {
+
+                            <span style="color:#dc2626;font-weight:600;">
+                                Pendiente
+                            </span>
+
+                            }
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+        }
+
+        @if (pestanaActiva === 'reporte') {
+        <div class="section-card">
+            <h2>Reporte del funcionario</h2>
+            <p>Aquí se podrá generar el reporte consolidado del funcionario.</p>
+        </div>
+        }
+
+    </div>
+
+</div>

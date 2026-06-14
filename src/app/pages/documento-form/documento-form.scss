@@ -1,0 +1,133 @@
+.form-page {
+  padding: 28px;
+  background: #f4f6f9;
+  min-height: calc(100vh - 70px);
+}
+
+.page-header {
+  margin-bottom: 22px;
+
+  h1 {
+    margin: 0;
+    font-size: 30px;
+    color: #102a43;
+  }
+
+  p {
+    margin-top: 6px;
+    color: #627d98;
+  }
+}
+
+.form-card {
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.form-card h2 {
+  font-size: 19px;
+  color: #102a43;
+  margin: 0 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #16a34a;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px 22px;
+  margin-bottom: 34px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334e68;
+    margin-bottom: 7px;
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 0 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    background: #ffffff;
+  }
+
+  input,
+  select {
+    height: 42px;
+  }
+
+  textarea {
+    min-height: 95px;
+    padding-top: 12px;
+    resize: vertical;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+  }
+}
+
+.full-width {
+  grid-column: span 3;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-save {
+  background: #16a34a;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background: #e5e7eb;
+  color: #334e68;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.alert-success {
+  background: #ecfdf5;
+  color: #065f46;
+  border-left: 5px solid #10b981;
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.alert-error {
+  background: #fef2f2;
+  color: #991b1b;
+  border-left: 5px solid #ef4444;
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}

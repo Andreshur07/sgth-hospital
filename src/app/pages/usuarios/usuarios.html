@@ -1,0 +1,80 @@
+<div class="container">
+
+  <h1>Usuarios</h1>
+
+  @if (mensajeExito) {
+  <div class="alert-success">
+    <span>✅</span>
+    {{ mensajeExito }}
+  </div>
+  }
+
+  @if (mensajeError) {
+  <div class="alert-error">
+    <span>❌</span>
+    {{ mensajeError }}
+  </div>
+  }
+
+  <div class="toolbar">
+    <button class="btn-new" (click)="nuevoUsuario()">
+      + Nuevo Usuario
+    </button>
+  </div>
+
+  <div class="search-box">
+    <input
+      type="text"
+      placeholder="🔍 Buscar por usuario, correo, funcionario o estado..."
+      [(ngModel)]="terminoBusqueda">
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Usuario</th>
+        <th>Correo</th>
+        <th>Funcionario</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let usuario of usuariosFiltrados()">
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.username }}</td>
+        <td>{{ usuario.email }}</td>
+        <td>{{ usuario.nombreFuncionario }}</td>
+
+        <td>
+          <span
+            class="estado-badge"
+            [class.activo]="usuario.activo"
+            [class.inactivo]="!usuario.activo">
+            {{ usuario.activo ? 'ACTIVO' : 'INACTIVO' }}
+          </span>
+        </td>
+
+        <td>
+
+          <button
+            class="btn-edit"
+            (click)="editarUsuario(usuario.id)">
+            Editar
+          </button>
+
+          <button
+            class="btn-delete"
+            [disabled]="!usuario.activo"
+            (click)="inactivarUsuario(usuario.id)">
+            {{ usuario.activo ? 'Inactivar' : 'Inactivo' }}
+          </button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

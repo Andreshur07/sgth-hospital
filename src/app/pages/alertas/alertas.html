@@ -1,0 +1,65 @@
+<div class="container">
+  <h1>Alertas</h1>
+
+  @if (mensajeExito) {
+  <div class="alert-success">
+    <span>✅</span>
+    {{ mensajeExito }}
+  </div>
+  }
+
+  @if (mensajeError) {
+  <div class="alert-error">
+    <span>❌</span>
+    {{ mensajeError }}
+  </div>
+  }
+
+  <div class="search-box">
+    <input
+      type="text"
+      placeholder="🔍 Buscar por funcionario, tipo, fecha o estado..."
+      [(ngModel)]="terminoBusqueda">
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Funcionario</th>
+        <th>Tipo</th>
+        <th>Fecha Alerta</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let alerta of alertasFiltradas()">
+        <td>{{ alerta.id }}</td>
+        <td>{{ alerta.funcionario }}</td>
+        <td>{{ alerta.tipo }}</td>
+        <td>{{ alerta.fechaAlerta }}</td>
+
+        <td>
+          <span
+            class="estado-badge"
+            [class.pendiente]="alerta.estado === 'PENDIENTE'"
+            [class.atendida]="alerta.estado === 'ATENDIDA'"
+            [class.inactiva]="alerta.estado === 'INACTIVA'">
+            {{ alerta.estado }}
+          </span>
+        </td>
+
+        <td>
+          <button
+            class="btn-attend"
+            [disabled]="alerta.estado === 'ATENDIDA'"
+            (click)="marcarAtendida(alerta.id)">
+            {{ alerta.estado === 'ATENDIDA' ? 'Atendida' : 'Marcar atendida' }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

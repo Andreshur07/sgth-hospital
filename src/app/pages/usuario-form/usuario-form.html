@@ -1,0 +1,120 @@
+<div class="form-page">
+
+  <div class="page-header">
+    <h1>
+      {{ modoEdicion ? 'Editar Usuario' : 'Nuevo Usuario' }}
+    </h1>
+  </div>
+
+  @if (mensajeExito) {
+  <div class="alert-success">
+    <span>✅</span>
+    {{ mensajeExito }}
+  </div>
+  }
+
+  @if (mensajeError) {
+  <div class="alert-error">
+    <span>❌</span>
+    {{ mensajeError }}
+  </div>
+  }
+
+  <div class="form-card">
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Usuario</label>
+        <input
+          type="text"
+          [(ngModel)]="usuario.username"
+          name="username">
+      </div>
+
+      <div class="form-group">
+        <label>Correo</label>
+        <input
+          type="email"
+          [(ngModel)]="usuario.email"
+          name="email">
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input
+          type="password"
+          [(ngModel)]="usuario.password"
+          name="password">
+      </div>
+
+      <div class="form-group">
+        <label>Funcionario</label>
+
+        <select
+          [(ngModel)]="usuario.funcionario"
+          name="funcionario">
+
+          <option [ngValue]="null">
+            Seleccione...
+          </option>
+
+          <option
+            *ngFor="let funcionario of funcionarios"
+            [ngValue]="funcionario">
+
+            {{ funcionario.primerNombre }}
+            {{ funcionario.segundoNombre }}
+            {{ funcionario.primerApellido }}
+            {{ funcionario.segundoApellido }}
+
+          </option>
+
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Estado</label>
+
+        <select
+          [(ngModel)]="usuario.activo"
+          name="activo">
+
+          <option [ngValue]="true">
+            ACTIVO
+          </option>
+
+          <option [ngValue]="false">
+            INACTIVO
+          </option>
+
+        </select>
+      </div>
+
+    </div>
+
+    <div class="actions">
+
+      <button
+        type="button"
+        class="btn-cancel"
+        (click)="cancelar()">
+
+        Cancelar
+
+      </button>
+
+      <button
+        type="button"
+        class="btn-save"
+        (click)="guardar()">
+
+        {{ modoEdicion ? 'Actualizar Usuario' : 'Guardar Usuario' }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

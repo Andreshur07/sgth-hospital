@@ -1,0 +1,60 @@
+<div class="container">
+    <h1>Funcionarios</h1>
+
+    <div class="toolbar">
+        <button class="btn-new" (click)="nuevoFuncionario()">
+            + Nuevo Funcionario
+        </button>
+    </div>
+
+    <div class="search-box">
+        <input type="text" placeholder="🔍 Buscar por documento, nombre, cargo o dependencia..."
+            [(ngModel)]="terminoBusqueda">
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Documento</th>
+                <th>Nombre</th>
+                <th>Cargo</th>
+                <th>Dependencia</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let funcionario of funcionariosFiltrados()">
+                <td>{{ funcionario.id }}</td>
+                <td>{{ funcionario.numeroDocumento }}</td>
+                <td>{{ funcionario.nombreCompleto }}</td>
+                <td>{{ funcionario.cargo }}</td>
+                <td>{{ funcionario.dependencia }}</td>
+
+                <td>
+                    <span class="estado-badge" [class.activo]="funcionario.estado === 'ACTIVO'"
+                        [class.inactivo]="funcionario.estado === 'INACTIVO'">
+                        {{ funcionario.estado }}
+                    </span>
+                </td>
+
+                <td>
+                    <button class="btn-edit" (click)="editarFuncionario(funcionario.id)">
+                        Editar
+                    </button>
+
+                    <button class="btn-delete" [disabled]="funcionario.estado === 'INACTIVO'"
+                        (click)="inactivarFuncionario(funcionario.id)">
+                        {{ funcionario.estado === 'INACTIVO' ? 'Inactivo' : 'Inactivar' }}
+                    </button>
+
+                    <button class="btn-view" (click)="verPerfil(funcionario.id)">
+                        Perfil
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

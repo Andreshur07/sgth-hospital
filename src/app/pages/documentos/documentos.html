@@ -1,0 +1,68 @@
+<div class="container">
+  <h1>Documentos</h1>
+  @if (mensajeExito) {
+  <div class="alert-success">
+    <span>✅</span>
+    {{ mensajeExito }}
+  </div>
+  }
+
+  @if (mensajeError) {
+  <div class="alert-error">
+    <span>❌</span>
+    {{ mensajeError }}
+  </div>
+  }
+
+  <div class="toolbar">
+    <button class="btn-new" (click)="nuevoDocumento()">
+      + Nuevo Documento
+    </button>
+  </div>
+
+  <div class="search-box">
+    <input type="text" placeholder="🔍 Buscar por archivo, tipo, estado o funcionario..." [(ngModel)]="terminoBusqueda">
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Archivo</th>
+        <th>Tipo Documento</th>
+        <th>Fecha Vencimiento</th>
+        <th>Estado</th>
+        <th>Funcionario</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let documento of documentosFiltrados()">
+        <td>{{ documento.id }}</td>
+        <td>{{ documento.nombreArchivo }}</td>
+        <td>{{ documento.tipoDocumento }}</td>
+        <td>{{ documento.fechaVencimiento }}</td>
+
+        <td>
+          <span class="estado-badge" [class.vigente]="documento.estado === 'VIGENTE'"
+            [class.vencido]="documento.estado === 'VENCIDO'">
+            {{ documento.estado }}
+          </span>
+        </td>
+
+        <td>{{ documento.nombreFuncionario }}</td>
+
+        <td>
+          <button class="btn-edit" (click)="editarDocumento(documento.id)">
+            Editar
+          </button>
+
+          <button class="btn-delete" (click)="eliminarDocumento(documento.id)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

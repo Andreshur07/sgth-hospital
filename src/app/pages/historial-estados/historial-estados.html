@@ -1,0 +1,25 @@
+<div class="container">
+  <h1>Historial de Estados</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Funcionario</th>
+        <th>Estado Anterior</th>
+        <th>Estado Nuevo</th>
+        <th>Fecha Cambio</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let item of historial">
+        <td>{{ item.id }}</td>
+        <td>{{ item.funcionario }}</td>
+        <td>{{ item.estadoAnterior }}</td>
+        <td>{{ item.estadoNuevo }}</td>
+        <td>{{ item.fecha }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

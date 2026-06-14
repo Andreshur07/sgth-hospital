@@ -1,0 +1,45 @@
+<div class="dashboard-container">
+
+    <h1>Dashboard</h1>
+
+    <div class="cards">
+
+        <div class="card funcionarios">
+            <div class="icon">👨‍⚕️</div>
+            <div class="title">Funcionarios</div>
+            <div class="value">{{ resumen.totalFuncionarios }}</div>
+        </div>
+
+        <div class="card activos">
+            <div class="icon">🟢</div>
+            <div class="title">Activos</div>
+            <div class="value">{{ resumen.funcionariosActivos }}</div>
+        </div>
+
+        <div class="card inactivos">
+            <div class="icon">🔴</div>
+            <div class="title">Inactivos</div>
+            <div class="value">{{ resumen.funcionariosInactivos }}</div>
+        </div>
+
+        <div class="card documentos">
+            <div class="icon">📄</div>
+            <div class="title">Documentos</div>
+            <div class="value">{{ resumen.totalDocumentos }}</div>
+        </div>
+
+        <div class="card alertas">
+            <div class="icon">⚠️</div>
+            <div class="title">Alertas</div>
+            <div class="value">{{ resumen.alertasPendientes }}</div>
+        </div>
+
+        <div class="card usuarios">
+            <div class="icon">👤</div>
+            <div class="title">Usuarios</div>
+            <div class="value">{{ resumen.usuariosActivos }}</div>
+        </div>
+
+    </div>
+
+</div>
