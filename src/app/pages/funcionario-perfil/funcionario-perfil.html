@@ -175,15 +175,241 @@
 
         @if (pestanaActiva === 'capacitaciones') {
         <div class="section-card">
-            <h2>Capacitaciones y cursos</h2>
-            <p>Aquí se registrarán cursos, certificaciones y capacitaciones.</p>
+
+            <h2>Capacitaciones y Cursos</h2>
+
+            @if (mensajeCapacitacionExito) {
+            <div class="alert-success">
+                ✅ {{ mensajeCapacitacionExito }}
+            </div>
+            }
+
+            @if (mensajeCapacitacionError) {
+            <div class="alert-error">
+                ❌ {{ mensajeCapacitacionError }}
+            </div>
+            }
+
+            <div class="document-form">
+
+                <div class="form-group">
+                    <label>Nombre Capacitación</label>
+                    <input type="text" [(ngModel)]="capacitacionForm.nombre"
+                        placeholder="Nombre del curso o capacitación">
+                </div>
+
+                <div class="form-group">
+                    <label>Institución</label>
+                    <input type="text" [(ngModel)]="capacitacionForm.institucion" placeholder="Entidad certificadora">
+                </div>
+
+                <div class="form-group">
+                    <label>Fecha Inicio</label>
+                    <input type="date" [(ngModel)]="capacitacionForm.fechaInicio">
+                </div>
+
+                <div class="form-group">
+                    <label>Fecha Vencimiento</label>
+                    <input type="date" [(ngModel)]="capacitacionForm.fechaVencimiento">
+                </div>
+
+                <div class="form-group full-row">
+                    <label>Certificado PDF</label>
+
+                    <input type="file" accept="application/pdf" (change)="seleccionarArchivoCapacitacion($event)">
+                </div>
+
+                <div class="form-actions full-row">
+                    <button type="button" class="btn-save" (click)="guardarCapacitacionPerfil()">
+
+                        Agregar Capacitación
+
+                    </button>
+                </div>
+
+            </div>
+
+            <table class="documents-table">
+
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Institución</th>
+                        <th>Inicio</th>
+                        <th>Vencimiento</th>
+                        <th>Estado</th>
+                        <th>Adjunto</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let capacitacion of capacitacionesFuncionario">
+
+                        <td>{{ capacitacion.nombre }}</td>
+
+                        <td>{{ capacitacion.institucion }}</td>
+
+                        <td>{{ capacitacion.fechaInicio }}</td>
+
+                        <td>{{ capacitacion.fechaVencimiento }}</td>
+
+                        <td>
+                            <span class="estado" [class.activo]="capacitacion.estado === 'VIGENTE'"
+                                [class.inactivo]="capacitacion.estado !== 'VIGENTE'">
+
+                                {{ capacitacion.estado }}
+
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <a class="btn-view-file" [href]="capacitacionService.verCapacitacion(capacitacion.id)"
+                                target="_blank">
+
+                                Ver PDF
+
+                            </a>
+
+                        </td>
+
+                        <td>
+
+                            <button type="button" class="btn-delete"
+                                (click)="eliminarCapacitacionPerfil(capacitacion.id)">
+
+                                Eliminar
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
         </div>
         }
 
         @if (pestanaActiva === 'experiencia') {
         <div class="section-card">
-            <h2>Experiencia laboral</h2>
-            <p>Aquí se mostrará la experiencia laboral del funcionario.</p>
+
+            <h2>Experiencia Laboral</h2>
+
+            @if (mensajeExperienciaExito) {
+            <div class="alert-success">
+                ✅ {{ mensajeExperienciaExito }}
+            </div>
+            }
+
+            @if (mensajeExperienciaError) {
+            <div class="alert-error">
+                ❌ {{ mensajeExperienciaError }}
+            </div>
+            }
+
+            <div class="document-form">
+
+                <div class="form-group">
+                    <label>Empresa</label>
+                    <input type="text" [(ngModel)]="experienciaForm.empresa" placeholder="Nombre de la empresa">
+                </div>
+
+                <div class="form-group">
+                    <label>Cargo</label>
+                    <input type="text" [(ngModel)]="experienciaForm.cargo" placeholder="Cargo desempeñado">
+                </div>
+
+                <div class="form-group">
+                    <label>Fecha Inicio</label>
+                    <input type="date" [(ngModel)]="experienciaForm.fechaInicio">
+                </div>
+
+                <div class="form-group">
+                    <label>Fecha Finalización</label>
+                    <input type="date" [(ngModel)]="experienciaForm.fechaFin">
+                </div>
+
+                <div class="form-group full-row">
+                    <label>Funciones Realizadas</label>
+                    <textarea [(ngModel)]="experienciaForm.funciones" placeholder="Descripción de funciones realizadas">
+            </textarea>
+                </div>
+
+                <div class="form-group full-row">
+                    <label>Certificación Laboral PDF</label>
+
+                    <input type="file" accept="application/pdf" (change)="seleccionarArchivoExperiencia($event)">
+                </div>
+
+                <div class="form-actions full-row">
+                    <button type="button" class="btn-save" (click)="guardarExperienciaPerfil()">
+
+                        Agregar Experiencia
+
+                    </button>
+                </div>
+
+            </div>
+
+            <table class="documents-table">
+
+                <thead>
+                    <tr>
+                        <th>Empresa</th>
+                        <th>Cargo</th>
+                        <th>Inicio</th>
+                        <th>Fin</th>
+                        <th>Funciones</th>
+                        <th>Certificación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let experiencia of experienciasFuncionario">
+
+                        <td>{{ experiencia.empresa }}</td>
+
+                        <td>{{ experiencia.cargo }}</td>
+
+                        <td>{{ experiencia.fechaInicio }}</td>
+
+                        <td>{{ experiencia.fechaFin }}</td>
+
+                        <td>{{ experiencia.funciones }}</td>
+
+                        <td>
+                            <a class="btn-view-file" [href]="experienciaLaboralService.verExperiencia(experiencia.id)"
+                                target="_blank">
+
+                                Ver PDF
+
+                            </a>
+                        </td>
+
+                        <td>
+
+                            <button type="button" class="btn-delete"
+                                (click)="eliminarExperienciaPerfil(experiencia.id)">
+
+                                Eliminar
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
         </div>
         }
 

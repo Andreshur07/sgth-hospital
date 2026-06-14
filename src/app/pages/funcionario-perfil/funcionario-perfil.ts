@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FuncionarioService } from '../../core/services/funcionario';
 import { DocumentoService } from '../../core/services/documento';
 import { TipoDocumentoService } from '../../core/services/tipo-documento';
+import { CapacitacionService } from '../../core/services/capacitacion';
+import { ExperienciaLaboralService } from '../../core/services/experiencia-laboral';
 
 @Component({
   selector: 'app-funcionario-perfil',
@@ -21,6 +23,8 @@ export class FuncionarioPerfil implements OnInit {
 
   private funcionarioService = inject(FuncionarioService);
   public documentoService = inject(DocumentoService);
+  public capacitacionService = inject(CapacitacionService);
+  public experienciaLaboralService = inject(ExperienciaLaboralService);
   private tipoDocumentoService = inject(TipoDocumentoService);
 
   funcionarioId!: number;
@@ -47,6 +51,35 @@ export class FuncionarioPerfil implements OnInit {
     observacion: ''
   };
 
+  capacitacionesFuncionario: any[] = [];
+
+  mensajeCapacitacionExito = '';
+  mensajeCapacitacionError = '';
+
+  archivoCapacitacionSeleccionado: File | null = null;
+
+  capacitacionForm: any = {
+    nombre: '',
+    institucion: '',
+    fechaInicio: '',
+    fechaVencimiento: ''
+  };
+
+  experienciasFuncionario: any[] = [];
+
+  mensajeExperienciaExito = '';
+  mensajeExperienciaError = '';
+
+  archivoExperienciaSeleccionado: File | null = null;
+
+  experienciaForm: any = {
+    empresa: '',
+    cargo: '',
+    fechaInicio: '',
+    fechaFin: '',
+    funciones: ''
+  };
+
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
 
@@ -54,6 +87,8 @@ export class FuncionarioPerfil implements OnInit {
       this.funcionarioId = Number(id);
       this.cargarFuncionario();
       this.cargarDocumentosFuncionario();
+      this.cargarCapacitacionesFuncionario();
+      this.cargarExperienciasFuncionario();
       this.cargarTiposDocumento();
     }
   }
@@ -213,4 +248,204 @@ export class FuncionarioPerfil implements OnInit {
   volver(): void {
     this.router.navigate(['/funcionarios']);
   }
+
+  cargarCapacitacionesFuncionario(): void {
+    this.capacitacionService.listarPorFuncionario(this.funcionarioId).subscribe({
+      next: (data: any[]) => {
+        this.capacitacionesFuncionario = [...data];
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error(err)
+    });
+  }
+
+  seleccionarArchivoCapacitacion(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      this.archivoCapacitacionSeleccionado = input.files[0];
+    }
+  }
+
+  guardarCapacitacionPerfil(): void {
+    this.mensajeCapacitacionExito = '';
+    this.mensajeCapacitacionError = '';
+
+    if (!this.capacitacionForm.nombre) {
+      this.mensajeCapacitacionError = 'Debe ingresar el nombre de la capacitación.';
+      return;
+    }
+
+    if (!this.capacitacionForm.fechaInicio) {
+      this.mensajeCapacitacionError = 'Debe ingresar la fecha de inicio.';
+      return;
+    }
+
+    if (!this.capacitacionForm.fechaVencimiento) {
+      this.mensajeCapacitacionError = 'Debe ingresar la fecha de vencimiento.';
+      return;
+    }
+
+    if (!this.archivoCapacitacionSeleccionado) {
+      this.mensajeCapacitacionError = 'Debe seleccionar un PDF de soporte.';
+      return;
+    }
+
+    const formData = new FormData();
+
+    formData.append('funcionarioId', String(this.funcionarioId));
+    formData.append('nombre', this.capacitacionForm.nombre);
+    formData.append('institucion', this.capacitacionForm.institucion || '');
+    formData.append('fechaInicio', this.capacitacionForm.fechaInicio);
+    formData.append('fechaVencimiento', this.capacitacionForm.fechaVencimiento);
+    formData.append('archivo', this.archivoCapacitacionSeleccionado);
+
+    this.capacitacionService.subirCapacitacion(formData).subscribe({
+      next: () => {
+        this.mensajeCapacitacionExito = 'Capacitación cargada correctamente.';
+
+        this.capacitacionForm = {
+          nombre: '',
+          institucion: '',
+          fechaInicio: '',
+          fechaVencimiento: ''
+        };
+
+        this.archivoCapacitacionSeleccionado = null;
+
+        this.cargarCapacitacionesFuncionario();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error(err);
+        this.mensajeCapacitacionError = 'No se pudo cargar la capacitación.';
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  eliminarCapacitacionPerfil(id: number): void {
+    const confirmar = confirm('¿Está seguro de eliminar esta capacitación?');
+
+    if (!confirmar) {
+      return;
+    }
+
+    this.capacitacionService.eliminar(id).subscribe({
+      next: () => {
+        this.mensajeCapacitacionExito = 'Capacitación eliminada correctamente.';
+        this.cargarCapacitacionesFuncionario();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error(err);
+        this.mensajeCapacitacionError = 'No se pudo eliminar la capacitación.';
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  cargarExperienciasFuncionario(): void {
+    this.experienciaLaboralService.listarPorFuncionario(this.funcionarioId).subscribe({
+      next: (data: any[]) => {
+        this.experienciasFuncionario = [...data];
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error(err)
+    });
+  }
+
+  seleccionarArchivoExperiencia(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      this.archivoExperienciaSeleccionado = input.files[0];
+    }
+  }
+
+  guardarExperienciaPerfil(): void {
+    this.mensajeExperienciaExito = '';
+    this.mensajeExperienciaError = '';
+
+    if (!this.experienciaForm.empresa) {
+      this.mensajeExperienciaError = 'Debe ingresar la empresa.';
+      return;
+    }
+
+    if (!this.experienciaForm.cargo) {
+      this.mensajeExperienciaError = 'Debe ingresar el cargo.';
+      return;
+    }
+
+    if (!this.experienciaForm.fechaInicio) {
+      this.mensajeExperienciaError = 'Debe ingresar la fecha de inicio.';
+      return;
+    }
+
+    if (!this.experienciaForm.fechaFin) {
+      this.mensajeExperienciaError = 'Debe ingresar la fecha de finalización.';
+      return;
+    }
+
+    if (!this.archivoExperienciaSeleccionado) {
+      this.mensajeExperienciaError = 'Debe seleccionar un PDF de soporte.';
+      return;
+    }
+
+    const formData = new FormData();
+
+    formData.append('funcionarioId', String(this.funcionarioId));
+    formData.append('empresa', this.experienciaForm.empresa);
+    formData.append('cargo', this.experienciaForm.cargo);
+    formData.append('fechaInicio', this.experienciaForm.fechaInicio);
+    formData.append('fechaFin', this.experienciaForm.fechaFin);
+    formData.append('funciones', this.experienciaForm.funciones || '');
+    formData.append('archivo', this.archivoExperienciaSeleccionado);
+
+    this.experienciaLaboralService.subirExperiencia(formData).subscribe({
+      next: () => {
+        this.mensajeExperienciaExito = 'Experiencia laboral cargada correctamente.';
+
+        this.experienciaForm = {
+          empresa: '',
+          cargo: '',
+          fechaInicio: '',
+          fechaFin: '',
+          funciones: ''
+        };
+
+        this.archivoExperienciaSeleccionado = null;
+
+        this.cargarExperienciasFuncionario();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error(err);
+        this.mensajeExperienciaError = 'No se pudo cargar la experiencia laboral.';
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  eliminarExperienciaPerfil(id: number): void {
+    const confirmar = confirm('¿Está seguro de eliminar esta experiencia laboral?');
+
+    if (!confirmar) {
+      return;
+    }
+
+    this.experienciaLaboralService.eliminar(id).subscribe({
+      next: () => {
+        this.mensajeExperienciaExito = 'Experiencia laboral eliminada correctamente.';
+        this.cargarExperienciasFuncionario();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error(err);
+        this.mensajeExperienciaError = 'No se pudo eliminar la experiencia laboral.';
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
 }
