@@ -260,3 +260,108 @@
 .btn-view-file:hover {
   text-decoration: underline;
 }
+
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 25px;
+}
+
+.report-header h3 {
+  margin-top: 0;
+  color: #102a43;
+}
+
+.report-score {
+  min-width: 180px;
+  background: #ecfdf5;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  color: #166534;
+  font-weight: 700;
+}
+
+.report-score span {
+  font-size: 42px;
+  display: block;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.report-card {
+  background: #f8fafc;
+  border-left: 5px solid #2563eb;
+  padding: 18px;
+  border-radius: 10px;
+}
+
+.report-card h4 {
+  margin: 0;
+  color: #334155;
+}
+
+.report-number {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 10px 0 4px;
+  color: #102a43;
+}
+
+.report-card span {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.report-detail {
+  margin-top: 25px;
+}
+
+.report-detail h3 {
+  color: #102a43;
+  margin-bottom: 12px;
+}
+
+.report-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.btn-print {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 11px 18px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media print {
+  .tabs,
+  .btn-back,
+  .report-actions {
+    display: none !important;
+  }
+
+  .perfil-page {
+    background: white;
+    padding: 0;
+  }
+
+  .section-card,
+  .perfil-header {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+}

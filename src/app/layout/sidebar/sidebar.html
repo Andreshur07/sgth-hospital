@@ -1,15 +1,82 @@
 <aside class="sidebar">
+
   <div class="logo">
     <h2>SGTH</h2>
     <span>Hospital RRHH</span>
   </div>
 
   <nav>
-    <a routerLink="/dashboard">Dashboard</a>
-    <a routerLink="/funcionarios">Funcionarios</a>
-    <a routerLink="/documentos">Documentos</a>
-    <a routerLink="/alertas">Alertas</a>
-    <a routerLink="/usuarios">Usuarios</a>
-    <a routerLink="/historial-estados">Historial</a>
+
+    <a routerLink="/dashboard">
+      Dashboard
+    </a>
+
+    @if (esAdministrador()) {
+
+      <a routerLink="/funcionarios">
+        Funcionarios
+      </a>
+
+      <a routerLink="/documentos">
+        Documentos
+      </a>
+
+      <a routerLink="/alertas">
+        Alertas
+      </a>
+
+      <a routerLink="/usuarios">
+        Usuarios
+      </a>
+
+      <a routerLink="/historial-estados">
+        Historial
+      </a>
+
+    }
+
+    @if (esTalentoHumano()) {
+
+      <a routerLink="/alertas">
+        Alertas
+      </a>
+
+    }
+
+    @if (esCoordinador()) {
+
+      <a routerLink="/funcionarios">
+        Funcionarios
+      </a>
+
+      <a routerLink="/documentos">
+        Documentos
+      </a>
+
+      <a routerLink="/alertas">
+        Alertas
+      </a>
+
+    }
+
+    @if (esAuditor()) {
+
+      <a routerLink="/documentos">
+        Documentos
+      </a>
+
+      <a routerLink="/historial-estados">
+        Historial
+      </a>
+
+    }
+
+    @if (esConsulta()) {
+
+      <!-- Solo Dashboard -->
+
+    }
+
   </nav>
+
 </aside>

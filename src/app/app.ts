@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { Sidebar } from './layout/sidebar/sidebar';
 import { Navbar } from './layout/navbar/navbar';
 
@@ -9,4 +9,10 @@ import { Navbar } from './layout/navbar/navbar';
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {}
+export class App {
+  private router = inject(Router);
+
+  esLogin(): boolean {
+    return this.router.url === '/login';
+  }
+}

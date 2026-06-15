@@ -17,3 +17,39 @@
     font-weight: 500;
   }
 }
+
+.usuario-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.datos-usuario {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.nombre {
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.rol {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.btn-logout {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-logout:hover {
+  background: #dc2626;
+}

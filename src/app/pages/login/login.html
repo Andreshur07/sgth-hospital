@@ -1,0 +1,39 @@
+<div class="login-page">
+
+  <div class="login-card">
+
+    <h1>SGTH</h1>
+    <p>Sistema de Gestión de Talento Humano</p>
+
+    @if (mensajeError) {
+    <div class="alert-error">
+      {{ mensajeError }}
+    </div>
+    }
+
+    <div class="form-group">
+      <label>Usuario</label>
+      <input
+        type="text"
+        [(ngModel)]="username"
+        placeholder="Ingrese su usuario">
+    </div>
+
+    <div class="form-group">
+      <label>Contraseña</label>
+      <input
+        type="password"
+        [(ngModel)]="password"
+        placeholder="Ingrese su contraseña">
+    </div>
+
+    <button
+      type="button"
+      class="btn-login"
+      (click)="ingresar()">
+      Ingresar
+    </button>
+
+  </div>
+
+</div>

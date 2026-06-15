@@ -448,4 +448,8 @@ export class FuncionarioPerfil implements OnInit {
     });
   }
 
+  imprimirReporte(): void {
+    window.print();
+  }
+
 }

@@ -521,9 +521,131 @@
         }
 
         @if (pestanaActiva === 'reporte') {
-        <div class="section-card">
-            <h2>Reporte del funcionario</h2>
-            <p>Aquí se podrá generar el reporte consolidado del funcionario.</p>
+        <div class="section-card reporte-section">
+
+            <h2>Reporte Consolidado del Funcionario</h2>
+
+            <div class="report-actions">
+                <button type="button" class="btn-print" (click)="imprimirReporte()">
+                    Imprimir / Guardar PDF
+                </button>
+            </div>
+
+            <div class="report-header">
+                <div>
+                    <h3>
+                        {{ funcionario.primerNombre }}
+                        {{ funcionario.segundoNombre }}
+                        {{ funcionario.primerApellido }}
+                        {{ funcionario.segundoApellido }}
+                    </h3>
+
+                    <p><strong>Documento:</strong> {{ funcionario.numeroDocumento }}</p>
+                    <p><strong>Cargo:</strong> {{ funcionario.cargo?.nombre || 'Sin cargo' }}</p>
+                    <p><strong>Dependencia:</strong> {{ funcionario.dependencia?.nombre || 'Sin dependencia' }}</p>
+                    <p><strong>Estado:</strong> {{ funcionario.estado }}</p>
+                </div>
+
+                <div class="report-score">
+                    <span>{{ porcentajeCumplimiento }}%</span>
+                    <p>Cumplimiento legal</p>
+                </div>
+            </div>
+
+            <div class="report-grid">
+
+                <div class="report-card">
+                    <h4>Documentos</h4>
+                    <p class="report-number">{{ documentosFuncionario.length }}</p>
+                    <span>documentos cargados</span>
+                </div>
+
+                <div class="report-card">
+                    <h4>Requisitos legales</h4>
+                    <p class="report-number">{{ requisitosCumplidos }}/{{ totalRequisitos }}</p>
+                    <span>requisitos cumplidos</span>
+                </div>
+
+                <div class="report-card">
+                    <h4>Capacitaciones</h4>
+                    <p class="report-number">{{ capacitacionesFuncionario.length }}</p>
+                    <span>capacitaciones registradas</span>
+                </div>
+
+                <div class="report-card">
+                    <h4>Experiencia laboral</h4>
+                    <p class="report-number">{{ experienciasFuncionario.length }}</p>
+                    <span>experiencias registradas</span>
+                </div>
+
+            </div>
+
+            <div class="report-detail">
+                <h3>Documentos cargados</h3>
+
+                <table class="documents-table">
+                    <thead>
+                        <tr>
+                            <th>Tipo Documento</th>
+                            <th>Vencimiento</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let documento of documentosFuncionario">
+                            <td>{{ documento.tipoDocumento?.nombre }}</td>
+                            <td>{{ documento.fechaVencimiento }}</td>
+                            <td>{{ documento.estado }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="report-detail">
+                <h3>Capacitaciones</h3>
+
+                <table class="documents-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Institución</th>
+                            <th>Vencimiento</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let capacitacion of capacitacionesFuncionario">
+                            <td>{{ capacitacion.nombre }}</td>
+                            <td>{{ capacitacion.institucion }}</td>
+                            <td>{{ capacitacion.fechaVencimiento }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="report-detail">
+                <h3>Experiencia laboral</h3>
+
+                <table class="documents-table">
+                    <thead>
+                        <tr>
+                            <th>Empresa</th>
+                            <th>Cargo</th>
+                            <th>Periodo</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let experiencia of experienciasFuncionario">
+                            <td>{{ experiencia.empresa }}</td>
+                            <td>{{ experiencia.cargo }}</td>
+                            <td>{{ experiencia.fechaInicio }} - {{ experiencia.fechaFin }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
         }
 
